@@ -1,0 +1,67 @@
+﻿@model Ankn_Morpork_MVC.Models.Player
+@using Ankn_Morpork_MVC.GameMessages
+@using Ankn_Morpork_MVC.Models
+
+@{
+    ViewBag.Title = "GameEnd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Game over....</h2>
+
+<div>
+    @if (Model.MoneyQuantity > 200)
+    {
+        <p>@EndGameReason.winMessage</p>
+    }
+    else if (Model.PlayerAction == false)
+    {
+        if (Model.CurrentNpcForPlay is Beggar)
+        {
+            <p>@EndGameReason.beggarKillMessage</p>
+        }
+        else if (Model.CurrentNpcForPlay is Assasin)
+        {
+            <p>@EndGameReason.assasinKillMessage </p>
+        }
+        else if (Model.CurrentNpcForPlay is Thief)
+        {
+            <p>@EndGameReason.thiefKillMessage </p>
+        }
+
+    }
+    else if (Model.CurrentNpcForPlay is Assasin assasin && Model.PlayerAction == true)
+    {
+        if (assasin.MinReward >= 0 || 10 >= assasin.MaxReward)
+        {
+            <p>@EndGameReason.notSuitablePlayerRewardMessage</p>
+        }
+    }
+    else if (Model.MoneyQuantity < Model.CurrentNpcForPlay.PlayerRewardForNPC)
+    {
+        if (Model.CurrentNpcForPlay is Assasin)
+        {
+            <p>@EndGameReason.playerDidNotHaveEnoughMoneyForAssasinMessage</p>
+        }
+        else if (Model.CurrentNpcForPlay is Thief)
+        {
+            <p>@EndGameReason.playerDidNotHaveEnoughMoneyForThiefMessage </p>
+        }
+        else if (Model.CurrentNpcForPlay is Beggar) 
+        { 
+            <p>@EndGameReason.playerDidNotHaveEnoughMoneyForBeggarMessage </p>
+        }
+
+    }
+    else
+    {
+        <p>@EndGameReason.diedMessage</p>
+    }
+
+
+
+
+
+
+</div>
+

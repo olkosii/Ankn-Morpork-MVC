@@ -1,0 +1,90 @@
+﻿@model Ankn_Morpork_MVC.Models.Player
+@using Ankn_Morpork_MVC.Models
+@using Ankn_Morpork_MVC.NPCsRepository
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Game Started</h2>
+
+<br /><br />
+
+<div class="left media-left" >
+    @if (Model.CurrentNpcForPlay is Assasin)
+     {
+        <p>
+            You meet : Assasin guild, it means somebody in the city ordered your death
+            Can you pay more than your enemies?) <br />(assasins don't tell their reward, you have to guess it 
+            If you pay more than your enemy you will stay alive,if you skip you will die)
+        </p>
+     }
+     else if(Model.CurrentNpcForPlay is Beggar beggar)
+     {
+         if (beggar.Name == "Drinker")
+         {
+            <p>You meet : @beggar.Name from Beggar guild<br />He will not chase you to death(you can continue or skip and stay alive</p>
+            return;
+         }
+         else
+         {
+                <p>
+                    You meet : @beggar.Name from Beggar guild <br />Give him some money or he will chase you to death
+                    <br />(If you skip ,you will not be able to do anything, so you will die)
+                </p>
+         }
+     }
+     else if(Model.CurrentNpcForPlay is Clown clown)
+     {
+                <p>
+                    You meet : @clown.Name, your old friend from Clown guild  <br />He offers you a little extra money<br />
+                    (If you don't need extra money you can skip)
+                </p>
+     }
+     else if(Model.CurrentNpcForPlay is Thief thief)
+     {
+
+          if (thief.AcceptableAmountOfThefts < ThiefRepository.currentAmountOfThief)
+          {
+                <p>
+                    You meet : Thief guild, but thieves have exceeded the socially acceptable number of thefts : 6<br />
+                    So if you skip, they won't take the money and you will stay alive
+                </p>
+               return;
+          }
+          else 
+          {
+                <p>
+                    You meet : Thief guild, be careful, If you resist, you might get hurt
+                </p>
+          }
+    }
+</div>
+
+<div class="right pull-right">
+    @Html.ActionLink("Continue", "Continue", "Game", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Skip", "Skip", "Game", null, new { @class = "btn btn-primary" })
+</div>
+
+<div class="img-rounded">
+    @if (Model.CurrentNpcForPlay is Assasin)
+    {
+        <img src="~/Images/Assasin1.jpg" height="400" width="400"/>
+    }
+    else if (Model.CurrentNpcForPlay is Beggar)
+    {
+        <img src="~/Images/beggar.jpg" height="400" width="400"/>
+    }
+    else if (Model.CurrentNpcForPlay is Thief)
+    {
+        <img src="~/Images/thief1.jpg" height="400" width="400"/>
+    }
+    else if (Model.CurrentNpcForPlay is Clown)
+    {
+        <img src="~/Images/clown1.jpg" height="400" width="400"/>
+    }
+</div>
+
+<div>
+    <p>Your money : @Model.MoneyQuantity</p>
+</div>
