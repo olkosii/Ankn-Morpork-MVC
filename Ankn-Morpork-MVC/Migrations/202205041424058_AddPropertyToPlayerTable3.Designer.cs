@@ -7,13 +7,13 @@ namespace Ankn_Morpork_MVC.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class ChangePlayersTablePropertyValue : IMigrationMetadata
+    public sealed partial class AddPropertyToPlayerTable3 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangePlayersTablePropertyValue));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddPropertyToPlayerTable3));
         
         string IMigrationMetadata.Id
         {
-            get { return "202205040518538_ChangePlayersTablePropertyValue"; }
+            get { return "202205041424058_AddPropertyToPlayerTable3"; }
         }
         
         string IMigrationMetadata.Source

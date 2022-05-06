@@ -20,8 +20,8 @@ namespace Ankn_Morpork_MVC.NPCsBuilder
         private void GetBeggar()
         {
             Random rand = new Random();
-
-            var beggarId = rand.Next(1, _context.Beggars.ToList().Count);
+            var maxId = _context.Beggars.ToList().Count;
+            var beggarId = rand.Next(1,maxId + 1);
 
             _beggar = _context.Beggars.FirstOrDefault(b => b.Id == beggarId);
         }

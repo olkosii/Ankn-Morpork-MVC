@@ -3,12 +3,12 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ChangePlayersTablePropertyValue : DbMigration
+    public partial class PlayerTableChange : DbMigration
     {
         public override void Up()
         {
-            Sql("INSERT INTO Players (PlayerAction)" +
-                "VALUES (1)");
+            Sql("UPDATE Players " +
+                "SET IsAlive = 1");
         }
         
         public override void Down()

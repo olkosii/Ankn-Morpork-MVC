@@ -22,8 +22,8 @@ namespace Ankn_Morpork_MVC.NPCsBuilder
         private void GetClown()
         {
             Random rand = new Random();
-
-            var clownId = rand.Next(1, _context.Clowns.ToList().Count);
+            var maxId = _context.Clowns.ToList().Count;
+            var clownId = rand.Next(1, maxId + 1);
 
             _clown = _context.Clowns.FirstOrDefault(c => c.Id == clownId);
         }

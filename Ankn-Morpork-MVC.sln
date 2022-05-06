@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ankn-Morpork-MVC", "Ankn-Morpork-MVC\Ankn-Morpork-MVC.csproj", "{F4A60AF8-1AB2-4D7F-BCAC-4A724BE4DA62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ankn-Morpork-MVC-Tests", "Ankn-Morpork-MVC-Tests\Ankn-Morpork-MVC-Tests.csproj", "{0E36807A-1482-40A1-8FFF-EF2722867052}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F4A60AF8-1AB2-4D7F-BCAC-4A724BE4DA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4A60AF8-1AB2-4D7F-BCAC-4A724BE4DA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4A60AF8-1AB2-4D7F-BCAC-4A724BE4DA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E36807A-1482-40A1-8FFF-EF2722867052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E36807A-1482-40A1-8FFF-EF2722867052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E36807A-1482-40A1-8FFF-EF2722867052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E36807A-1482-40A1-8FFF-EF2722867052}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

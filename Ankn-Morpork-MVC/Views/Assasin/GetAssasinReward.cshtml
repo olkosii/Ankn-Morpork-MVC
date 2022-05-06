@@ -1,0 +1,17 @@
+﻿@model Ankn_Morpork_MVC.Models.Assasin
+
+@{
+    ViewBag.Title = "GetAssasinReward";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Enter your reward for Assasin Guild</h2>
+
+@using (Html.BeginForm("ReturnReward", "Assasin"))
+{
+    @Html.TextBoxFor(m => m.PlayerRewardForNPC, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.PlayerRewardForNPC);
+    <br />
+    <button type="submit" class="btn btn-primary">Confirm</button>
+ }
+

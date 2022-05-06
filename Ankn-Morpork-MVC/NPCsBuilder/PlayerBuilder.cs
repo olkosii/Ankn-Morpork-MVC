@@ -17,7 +17,7 @@ namespace Ankn_Morpork_MVC.NPCsBuilder
 
         public Player ReturnPlayer()
         {
-            _player = _context.Player.Single();
+            _player = _context.Player.FirstOrDefault();
 
             return _player;
         }

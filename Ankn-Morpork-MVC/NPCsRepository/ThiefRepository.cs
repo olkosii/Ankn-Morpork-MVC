@@ -1,34 +1,36 @@
 ﻿using Ankn_Morpork_MVC.Models;
 using Ankn_Morpork_MVC.Models.ModelInterfaces;
+using System.Linq;
 
 namespace Ankn_Morpork_MVC.NPCsRepository
 {
     public class ThiefRepository : INPCsRepository
     {
-        private static Thief _thief;
-
+        private ApplicationDbContext _context;
         public static int currentAmountOfThief;
 
-        public ThiefRepository(Thief thief)
+        public ThiefRepository(ApplicationDbContext context)
         {
             currentAmountOfThief++;
-            _thief = thief;
+            _context = context;
         }
 
         public static bool CheckIfThiefCanStealPlayerMoney()
         {
-            if (currentAmountOfThief <= _thief.AcceptableAmountOfThefts)
+            if (currentAmountOfThief <= 6)
                 return true;
             else
                 return false;
         }
 
-        public void PlayerMeetGuildNPC(Player player)
+        public void PlayerMeetGuildNPC(IGuildNPC npc)
         {
-            Thief thief = (Thief)player.CurrentNpcForPlay;
+            var player = _context.Player.FirstOrDefault();
+
+            Thief thief = (Thief)npc;
 
             if (currentAmountOfThief <= thief.AcceptableAmountOfThefts)
-                player.MoneyQuantity -= (decimal)thief.PlayerRewardForNPC;
+                player.MoneyQuantity -= thief.PlayerRewardForNPC;
             else if (thief.PlayerRewardForNPC > player.MoneyQuantity)
             {
                 player.MoneyQuantity = 0;
@@ -40,6 +42,8 @@ namespace Ankn_Morpork_MVC.NPCsRepository
                 player.MoneyQuantity = 0;
                 player.IsAlive = false;
             }
+
+            _context.SaveChanges();
         }
     }
 }

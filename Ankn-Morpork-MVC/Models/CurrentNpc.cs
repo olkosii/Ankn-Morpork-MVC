@@ -1,6 +1,4 @@
-﻿using Ankn_Morpork_MVC.Models.ModelInterfaces;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace Ankn_Morpork_MVC.Models
 {

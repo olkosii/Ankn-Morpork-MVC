@@ -1,5 +1,4 @@
 ﻿using Ankn_Morpork_MVC.Models.ModelInterfaces;
-using System;
 
 namespace Ankn_Morpork_MVC.Models
 {
@@ -9,6 +8,6 @@ namespace Ankn_Morpork_MVC.Models
 
         public string Name { get; set; }
 
-        public decimal? PlayerRewardForNPC { get; set; }
+        public decimal PlayerRewardForNPC { get; set; }
     }
 }

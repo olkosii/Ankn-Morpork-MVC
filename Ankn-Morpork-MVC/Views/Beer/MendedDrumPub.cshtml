@@ -1,0 +1,18 @@
+﻿@model Ankn_Morpork_MVC.Models.Player
+
+@{
+    ViewBag.Title = "Mended Drum Pub";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mended Drum Pub</h2>
+
+<h5>Enter how many pints of beer you want to buy(max = 2)</h5>
+
+@using (Html.BeginForm("ReturnBeerResult", "Beer"))
+{
+    @Html.TextBoxFor(m => m.BeerAmount, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.BeerAmount);
+    <br />
+    <button type="submit" class="btn btn-primary">Confirm</button>
+}

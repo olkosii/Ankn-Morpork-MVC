@@ -2,7 +2,6 @@
 using Ankn_Morpork_MVC.Models.ModelInterfaces;
 using Ankn_Morpork_MVC.NPCsBuilder;
 using Ankn_Morpork_MVC.NPCsRepository;
-using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -12,17 +11,19 @@ namespace Ankn_Morpork_MVC.Controllers
     {
         private Player _player;
         private PlayerBuilder _builder;
-        private ApplicationDbContext _context;
-        private GameRepository _gameRepository;
         private PlayerRepository _playerRepository;
-        private INPCsRepository _npcsRepository;
-
+        private GameRepository _gameRepository;
+        private ApplicationDbContext _context;
+        private NPCRepository _npcRepository;
+        
+        
         public GameController()
         {
             _builder = new PlayerBuilder();
             _context = new ApplicationDbContext();
             _gameRepository = new GameRepository();
-            _playerRepository = new PlayerRepository(); 
+            _playerRepository = new PlayerRepository(_context); 
+            _npcRepository = new NPCRepository(_context);
         }
 
         public ActionResult About()
@@ -35,10 +36,11 @@ namespace Ankn_Morpork_MVC.Controllers
             _player = _builder.ReturnPlayer();
             if (_player != null && _player.IsAlive && _player.MoneyQuantity < 200 && _player.MoneyQuantity > 0)
             {
+                if (_playerRepository.GoToMendedDrum())
+                    return View(_player);
+                    
                 _player.CurrentNpcForPlay = _gameRepository.GetNpc();
-                _playerRepository.GetNPCType(_player);
-
-                _context.SaveChanges();
+                _npcRepository.GetNPCType(_player);
 
                 return View(_player);
             }
@@ -46,37 +48,54 @@ namespace Ankn_Morpork_MVC.Controllers
                 return RedirectToAction("GameEnd");
         }
 
-        public ActionResult Continue()
+        public ActionResult Continue(Assasin assasinWithReward)
         {
             _player = _builder.ReturnPlayer();
             _player.CurrentNpcTypeForPlay = _context.CurrentNpcs.FirstOrDefault();
-            _playerRepository.GetNPCById(_player);
-            _npcsRepository.PlayerMeetGuildNPC(_player);
+            _npcRepository.GetNPCById(_player);
 
-            _context.SaveChanges();
+            if(_player.CurrentNpcForPlay is Assasin && assasinWithReward.PlayerRewardForNPC != 0)
+                _player.CurrentNpcForPlay.PlayerRewardForNPC = assasinWithReward.PlayerRewardForNPC;
 
+            if (_player.CurrentNpcForPlay is Assasin assasin && assasin.PlayerRewardForNPC == 0)
+                 return RedirectToAction("GetAssasinReward", "Assasin");
+
+            if (_player.IsInPub)
+                return RedirectToAction("MendedDrumPub", "Beer");
+
+            _npcRepository.PlayWith(_player);
             return RedirectToAction("Index");
         }
 
         public ActionResult Skip()
         {
             _player = _builder.ReturnPlayer();
+            _player.CurrentNpcTypeForPlay = _context.CurrentNpcs.FirstOrDefault();
+            _npcRepository.GetNPCById(_player);
+
+            if (_player.IsInPub)
+            {
+                _playerRepository.LeaveMendedDrum();
+
+                return RedirectToAction("Index");
+            }
 
             if (_player.CurrentNpcForPlay is Clown ||
-               (_player.CurrentNpcForPlay is Beggar beggar && beggar.Name == "Drinker") ||
-               (_player.CurrentNpcForPlay is Thief && ThiefRepository.CheckIfThiefCanStealPlayerMoney() == false))
-                return RedirectToAction("Index");
+               (_player.CurrentNpcForPlay is Thief && ThiefRepository.CheckIfThiefCanStealPlayerMoney() == false) ||
+               (_player.CurrentNpcForPlay == null))
+                 return RedirectToAction("Index");
 
-            _player.PlayerAction = false;
+            _playerRepository.PlayerActionIsFalse();
 
-            _context.SaveChanges();
-
-            return RedirectToAction("GameEnd");
+            return RedirectToAction("GameEnd",_player);
         }
 
-        public ActionResult GameEnd()
+        public ActionResult GameEnd(Player player)
         {
-            return View(_player);
+            player.CurrentNpcTypeForPlay = _context.CurrentNpcs.FirstOrDefault();
+            _npcRepository.GetNPCById(player);
+
+            return View(player);
         }
     }
 }

@@ -175,10 +175,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AssasinController.cs" />
+    <Compile Include="Controllers\BeerController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="GameMessages\EndGameReason.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -295,9 +296,37 @@
     <Compile Include="Migrations\202205031621095_ChangeForeignKeyInCurrentNpcTable.designer.cs">
       <DependentUpon>202205031621095_ChangeForeignKeyInCurrentNpcTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202205040518538_ChangePlayersTablePropertyValue.cs" />
-    <Compile Include="Migrations\202205040518538_ChangePlayersTablePropertyValue.designer.cs">
-      <DependentUpon>202205040518538_ChangePlayersTablePropertyValue.cs</DependentUpon>
+    <Compile Include="Migrations\202205041424058_AddPropertyToPlayerTable3.cs" />
+    <Compile Include="Migrations\202205041424058_AddPropertyToPlayerTable3.designer.cs">
+      <DependentUpon>202205041424058_AddPropertyToPlayerTable3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205041551286_ChangePlayerMoneyQuantity.cs" />
+    <Compile Include="Migrations\202205041551286_ChangePlayerMoneyQuantity.designer.cs">
+      <DependentUpon>202205041551286_ChangePlayerMoneyQuantity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205041647231_ChangePlayerMoneyQuantity1.cs" />
+    <Compile Include="Migrations\202205041647231_ChangePlayerMoneyQuantity1.designer.cs">
+      <DependentUpon>202205041647231_ChangePlayerMoneyQuantity1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205041651057_PlayerTableChange.cs" />
+    <Compile Include="Migrations\202205041651057_PlayerTableChange.designer.cs">
+      <DependentUpon>202205041651057_PlayerTableChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205050643221_ChangeNPCsPropertiesToNotNullable.cs" />
+    <Compile Include="Migrations\202205050643221_ChangeNPCsPropertiesToNotNullable.designer.cs">
+      <DependentUpon>202205050643221_ChangeNPCsPropertiesToNotNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205051000132_AddNewPropertyToPlayerTable.cs" />
+    <Compile Include="Migrations\202205051000132_AddNewPropertyToPlayerTable.designer.cs">
+      <DependentUpon>202205051000132_AddNewPropertyToPlayerTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205051001567_AddNewPropertyToPlayerTable1.cs" />
+    <Compile Include="Migrations\202205051001567_AddNewPropertyToPlayerTable1.designer.cs">
+      <DependentUpon>202205051001567_AddNewPropertyToPlayerTable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205051023200_PopulateNewPropertyInPlayerTable.cs" />
+    <Compile Include="Migrations\202205051023200_PopulateNewPropertyInPlayerTable.designer.cs">
+      <DependentUpon>202205051023200_PopulateNewPropertyInPlayerTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -324,6 +353,7 @@
     <Compile Include="NPCsRepository\ClownRepository.cs" />
     <Compile Include="NPCsRepository\GameRepository.cs" />
     <Compile Include="NPCsRepository\INPCsRepository.cs" />
+    <Compile Include="NPCsRepository\NPCRepository.cs" />
     <Compile Include="NPCsRepository\PlayerRepository.cs" />
     <Compile Include="NPCsRepository\ThiefRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -344,6 +374,7 @@
     <Content Include="Images\BeggarsGuild.jpg" />
     <Content Include="Images\clown1.jpg" />
     <Content Include="Images\ClownsGuild.jpg" />
+    <Content Include="Images\The_Mended_Drum.jpg" />
     <Content Include="Images\thief1.jpg" />
     <Content Include="Images\ThiefsGuild.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -397,6 +428,8 @@
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Game\About.cshtml" />
     <Content Include="Views\Game\GameEnd.cshtml" />
+    <Content Include="Views\Assasin\GetAssasinReward.cshtml" />
+    <Content Include="Views\Beer\MendedDrumPub.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -500,8 +533,29 @@
     <EmbeddedResource Include="Migrations\202205031621095_ChangeForeignKeyInCurrentNpcTable.resx">
       <DependentUpon>202205031621095_ChangeForeignKeyInCurrentNpcTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202205040518538_ChangePlayersTablePropertyValue.resx">
-      <DependentUpon>202205040518538_ChangePlayersTablePropertyValue.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202205041424058_AddPropertyToPlayerTable3.resx">
+      <DependentUpon>202205041424058_AddPropertyToPlayerTable3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205041551286_ChangePlayerMoneyQuantity.resx">
+      <DependentUpon>202205041551286_ChangePlayerMoneyQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205041647231_ChangePlayerMoneyQuantity1.resx">
+      <DependentUpon>202205041647231_ChangePlayerMoneyQuantity1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205041651057_PlayerTableChange.resx">
+      <DependentUpon>202205041651057_PlayerTableChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205050643221_ChangeNPCsPropertiesToNotNullable.resx">
+      <DependentUpon>202205050643221_ChangeNPCsPropertiesToNotNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205051000132_AddNewPropertyToPlayerTable.resx">
+      <DependentUpon>202205051000132_AddNewPropertyToPlayerTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205051001567_AddNewPropertyToPlayerTable1.resx">
+      <DependentUpon>202205051001567_AddNewPropertyToPlayerTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205051023200_PopulateNewPropertyInPlayerTable.resx">
+      <DependentUpon>202205051023200_PopulateNewPropertyInPlayerTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

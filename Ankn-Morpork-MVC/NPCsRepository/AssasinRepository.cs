@@ -1,18 +1,27 @@
 ﻿using Ankn_Morpork_MVC.Models;
 using Ankn_Morpork_MVC.Models.ModelInterfaces;
-using System;
+using System.Linq;
 
 namespace Ankn_Morpork_MVC.NPCsRepository
 {
     public class AssasinRepository : INPCsRepository
     {
-        public void PlayerMeetGuildNPC(Player player)
+        private ApplicationDbContext _context;
+
+        public AssasinRepository(ApplicationDbContext context)
         {
-            Assasin assasin = (Assasin)player.CurrentNpcForPlay;
+            _context = context; 
+        }
+
+        public void PlayerMeetGuildNPC(IGuildNPC npc)
+        {
+            var player = _context.Player.FirstOrDefault();
+
+            Assasin assasin = (Assasin)npc;
 
             if (assasin.MinReward <= assasin.PlayerRewardForNPC && assasin.PlayerRewardForNPC <= assasin.MaxReward)
             {
-                player.MoneyQuantity -= (decimal)assasin.PlayerRewardForNPC;
+                player.MoneyQuantity -= assasin.PlayerRewardForNPC;
                 if (player.MoneyQuantity < 0)
                     player.MoneyQuantity = 0;
             }
@@ -21,6 +30,10 @@ namespace Ankn_Morpork_MVC.NPCsRepository
                 player.MoneyQuantity = 0;
                 player.IsAlive = false;
             }
+
+            assasin.PlayerRewardForNPC = 0;
+
+            _context.SaveChanges();
         }
     }
 }

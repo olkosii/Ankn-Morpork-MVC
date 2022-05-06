@@ -1,5 +1,5 @@
 ﻿using Ankn_Morpork_MVC.Models.ModelInterfaces;
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ankn_Morpork_MVC.Models
 {
@@ -13,6 +13,8 @@ namespace Ankn_Morpork_MVC.Models
 
         public bool IsBusy { get; set; } 
 
-        public decimal? PlayerRewardForNPC { get; set; }
+        [Required(ErrorMessage = "Please enter numbers")]
+        [Display(Name = "Reward")]
+        public decimal PlayerRewardForNPC { get; set; }
     }
 }

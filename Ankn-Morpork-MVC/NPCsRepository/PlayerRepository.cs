@@ -1,5 +1,4 @@
 ﻿using Ankn_Morpork_MVC.Models;
-using Ankn_Morpork_MVC.Models.ModelInterfaces;
 using System;
 using System.Linq;
 
@@ -9,61 +8,53 @@ namespace Ankn_Morpork_MVC.NPCsRepository
     {
         private ApplicationDbContext _context;
 
-        public PlayerRepository()
+        public PlayerRepository(ApplicationDbContext context)
         {
-            _context = new ApplicationDbContext();
+            _context = context;
         }
-        public void GetNPCType(Player player)
+
+        public static int CalculateBeerCost(int beerAmount)
         {
-            var _currentNpc = _context.CurrentNpcs.FirstOrDefault();
+            return beerAmount * 2;
+        }
 
-            if (player.CurrentNpcForPlay.GetType().Name == NPCType.Assasin.ToString())
+        public bool GoToMendedDrum()
+        {
+            var player = _context.Player.FirstOrDefault();
+
+            if (player.BeerAmount < 1)
             {
-                _currentNpc.NPCTypeId = (byte)NPCType.Assasin;
+                Random random = new Random();
+                var result = random.Next(1, 4);
+                if (result == 1)
+                {
+                    player.IsInPub = true;
 
-                _currentNpc.NPCId = player.CurrentNpcForPlay.Id;
+                    _context.SaveChanges();
+
+                    return true;
+                }
+                else
+                    return false;
             }
-            else if (player.CurrentNpcForPlay.GetType().Name == NPCType.Thief.ToString())
-            {
-                _currentNpc.NPCTypeId = (byte)NPCType.Thief;
+            else
+                return false;
+        }
 
-                _currentNpc.NPCId = player.CurrentNpcForPlay.Id;
-            }
-            else if (player.CurrentNpcForPlay.GetType().Name == NPCType.Beggar.ToString())
-            {
-                _currentNpc.NPCTypeId = (byte)NPCType.Beggar;
-
-                _currentNpc.NPCId = player.CurrentNpcForPlay.Id;
-            }
-            else if (player.CurrentNpcForPlay.GetType().Name == NPCType.Clown.ToString())
-            {
-                _currentNpc.NPCTypeId = (byte)NPCType.Clown;
-
-                _currentNpc.NPCId = player.CurrentNpcForPlay.Id;
-            }
-
+        public void LeaveMendedDrum()
+        {
+            var player = _context.Player.FirstOrDefault();
+            player.IsInPub = false;
             _context.SaveChanges();
         }
 
-        public void GetNPCById(Player player)
+        public void PlayerActionIsFalse()
         {
-            switch (player.CurrentNpcTypeForPlay.NPCTypeId)
-            {
-                case 1:
-                    player.CurrentNpcForPlay = _context.Assasins.FirstOrDefault(a => a.Id == player.CurrentNpcTypeForPlay.NPCId);
-                    break;
-                case 2:
-                    player.CurrentNpcForPlay = _context.Thiefs.FirstOrDefault(a => a.Id == player.CurrentNpcTypeForPlay.NPCId);
-                    break;
-                case 3:
-                    player.CurrentNpcForPlay = _context.Beggars.FirstOrDefault(a => a.Id == player.CurrentNpcTypeForPlay.NPCId);
-                    break;
-                case 4:
-                    player.CurrentNpcForPlay = _context.Clowns.FirstOrDefault(a => a.Id == player.CurrentNpcTypeForPlay.NPCId);
-                    break;
-                default:
-                    break;
-            }
+            var player = _context.Player.FirstOrDefault();
+
+            player.PlayerAction = false;
+
+            _context.SaveChanges();
         }
     }
 }

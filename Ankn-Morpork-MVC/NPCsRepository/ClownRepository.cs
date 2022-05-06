@@ -1,15 +1,27 @@
 ﻿using Ankn_Morpork_MVC.Models;
-using System;
+using Ankn_Morpork_MVC.Models.ModelInterfaces;
+using System.Linq;
 
 namespace Ankn_Morpork_MVC.NPCsRepository
 {
     public class ClownRepository : INPCsRepository
     {
-        public void PlayerMeetGuildNPC(Player player)
-        {
-            Clown clown = (Clown)player.CurrentNpcForPlay;
+        private ApplicationDbContext _context;
 
-            player.MoneyQuantity += (decimal)clown.PlayerRewardForNPC;
+        public ClownRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public void PlayerMeetGuildNPC(IGuildNPC npc)
+        {
+            var player = _context.Player.FirstOrDefault();
+
+            Clown clown = (Clown)npc;
+
+            player.MoneyQuantity += clown.PlayerRewardForNPC;
+
+            _context.SaveChanges();
         }
     }
 }

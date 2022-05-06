@@ -18,38 +18,59 @@
     {
         if (Model.CurrentNpcForPlay is Beggar)
         {
-            <p>@EndGameReason.beggarKillMessage</p>
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.beggarKillMessage
+        </p>
         }
         else if (Model.CurrentNpcForPlay is Assasin)
         {
-            <p>@EndGameReason.assasinKillMessage </p>
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.assasinKillMessage
+        </p>
         }
         else if (Model.CurrentNpcForPlay is Thief)
         {
-            <p>@EndGameReason.thiefKillMessage </p>
-        }
 
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.thiefKillMessage
+        </p>
+        }
     }
     else if (Model.CurrentNpcForPlay is Assasin assasin && Model.PlayerAction == true)
     {
         if (assasin.MinReward >= 0 || 10 >= assasin.MaxReward)
         {
-            <p>@EndGameReason.notSuitablePlayerRewardMessage</p>
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.notSuitablePlayerRewardMessage
+        </p>
         }
     }
-    else if (Model.MoneyQuantity < Model.CurrentNpcForPlay.PlayerRewardForNPC)
+    else if (Model.MoneyQuantity < (decimal)Model.CurrentNpcForPlay.PlayerRewardForNPC)
     {
         if (Model.CurrentNpcForPlay is Assasin)
         {
-            <p>@EndGameReason.playerDidNotHaveEnoughMoneyForAssasinMessage</p>
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.playerDidNotHaveEnoughMoneyForAssasinMessage
+        </p>
         }
         else if (Model.CurrentNpcForPlay is Thief)
         {
-            <p>@EndGameReason.playerDidNotHaveEnoughMoneyForThiefMessage </p>
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.playerDidNotHaveEnoughMoneyForThiefMessage 
+        </p>
         }
         else if (Model.CurrentNpcForPlay is Beggar) 
         { 
-            <p>@EndGameReason.playerDidNotHaveEnoughMoneyForBeggarMessage </p>
+        <p>
+            @EndGameReason.diedMessage<br />
+            @EndGameReason.playerDidNotHaveEnoughMoneyForBeggarMessage 
+        </p>
         }
 
     }
@@ -57,11 +78,5 @@
     {
         <p>@EndGameReason.diedMessage</p>
     }
-
-
-
-
-
-
 </div>
 
