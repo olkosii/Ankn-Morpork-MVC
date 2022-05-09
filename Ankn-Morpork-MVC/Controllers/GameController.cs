@@ -48,14 +48,11 @@ namespace Ankn_Morpork_MVC.Controllers
                 return RedirectToAction("GameEnd");
         }
 
-        public ActionResult Continue(Assasin assasinWithReward)
+        public ActionResult Continue()
         {
             _player = _builder.ReturnPlayer();
             _player.CurrentNpcTypeForPlay = _context.CurrentNpcs.FirstOrDefault();
             _npcRepository.GetNPCById(_player);
-
-            if(_player.CurrentNpcForPlay is Assasin && assasinWithReward.PlayerRewardForNPC != 0)
-                _player.CurrentNpcForPlay.PlayerRewardForNPC = assasinWithReward.PlayerRewardForNPC;
 
             if (_player.CurrentNpcForPlay is Assasin assasin && assasin.PlayerRewardForNPC == 0)
                  return RedirectToAction("GetAssasinReward", "Assasin");
